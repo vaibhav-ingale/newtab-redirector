@@ -37,22 +37,26 @@ A Chrome extension that redirects empty new tabs to your preferred URL while lea
 ```
 ├── manifest.json         # Extension configuration
 ├── background.js         # Main extension logic
-├── popup.html            # Settings popup interface
+├── newtab.html           # New tab page interface
+├── newtab.js             # New tab page functionality
+├── popup.html            # Extension popup interface
 ├── popup.js              # Popup functionality
+├── settings.html         # Settings/options page
+├── settings.js           # Settings page functionality
 ├── images/               # Extension icons
 │   ├── icon-16.png
 │   ├── icon-32.png
 │   ├── icon-48.png
 │   └── icon-128.png
+├── ss.png                # Screenshot
 └── README.md
 ```
 
 ## Permissions
 
-- `tabs` - Monitor tab creation and updates
-- `storage` - Save user preferences
-- `history` - Clean up redirect history entries
-- `<all_urls>` - Access all websites for redirects
+- `storage` - Save user iframe preferences and settings
+- `tabs` - Monitor tab creation, updates, and reload settings pages
+- `<all_urls>` - Access all websites for iframe embedding
 
 ## Development Notes
 
@@ -76,3 +80,12 @@ The extension uses Chrome's Manifest V3 and includes:
 3. **Settings not saving**
    - Verify storage permissions are enabled
    - Check popup console for JavaScript errors
+
+## Changelog
+
+### Version 1.1
+- **Removed default iframe**: No longer shows a default iframe when none is configured
+- **Added settings integration**: New tab page now shows a message with a clickable button to open settings when no iframe is configured
+- **Enhanced user experience**: Clear guidance for users to configure their iframe through the settings page
+- **Updated options page**: Properly configured options page in manifest for better settings access
+- **Improved error handling**: Better error messages and user guidance when iframe is not configured
