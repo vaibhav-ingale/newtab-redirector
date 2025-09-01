@@ -4,6 +4,8 @@ const DEFAULT_REDIRECT_URL = 'https://calendar.google.com/calendar/u/0/r/week'
 
 chrome.tabs.onCreated.addListener(async (tab) => {
   console.log('Tab created with URL:', tab.url);
+  console.log('URL length:', tab.url ? tab.url.length : '0');
+
   if ((tab.url === 'chrome://newtab/' || tab.url === 'about:blank' || !tab.url) && !tab.url?.startsWith('chrome://')) {
     console.log('Condition met for redirect, retrieving stored URL...');
     const result = await chrome.storage.sync.get(['redirectUrl']);
@@ -13,13 +15,8 @@ chrome.tabs.onCreated.addListener(async (tab) => {
     chrome.tabs.update(tab.id, { url: redirectUrl });
     console.log('Tab redirected to:', redirectUrl);
     
-    // Clear the original URL from history
-    setTimeout(() => {
-      chrome.history.deleteUrl({ url: tab.url });
-      console.log('Cleared original URL from history:', tab.url);
-    }, 1000);
   } else {
-    console.log('No redirect - URL does not match conditions');
+    console.log('No redirect - tab has specific URL or is not empty new tab');
   }
 });
 
