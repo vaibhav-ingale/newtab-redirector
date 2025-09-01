@@ -1,56 +1,19 @@
-// Get default URL from manifest
-const manifest = chrome.runtime.getManifest();
-const DEFAULT_REDIRECT_URL = 'https://calendar.google.com/calendar/u/0/r/week'
-
-document.addEventListener('DOMContentLoaded', async () => {
-  console.log('Popup loaded, initializing...');
-  const urlInput = document.getElementById('urlInput');
-  const saveBtn = document.getElementById('saveBtn');
-  const status = document.getElementById('status');
-
-  console.log('Retrieving stored redirect URL...');
-  const result = await chrome.storage.sync.get(['redirectUrl']);
-  console.log('Retrieved configuration:', result);
-  urlInput.value = result.redirectUrl || DEFAULT_REDIRECT_URL;
-  console.log('Set input field to:', urlInput.value);
-
-  saveBtn.addEventListener('click', async () => {
-    const url = urlInput.value.trim();
-    console.log('Save button clicked, URL entered:', url);
-    
-    if (!url) {
-      console.log('Validation failed: empty URL');
-      showStatus('Please enter a URL', 'error');
-      return;
-    }
-
-    if (!isValidUrl(url)) {
-      console.log('Validation failed: invalid URL format');
-      showStatus('Please enter a valid URL', 'error');
-      return;
-    }
-
-    console.log('Saving URL to storage:', url);
-    await chrome.storage.sync.set({ redirectUrl: url });
-    console.log('URL saved successfully');
-    showStatus('Settings saved!', 'success');
-  });
-
-  function isValidUrl(string) {
-    try {
-      new URL(string);
-      return true;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  function showStatus(message, type) {
-    status.textContent = message;
-    status.className = type;
-    setTimeout(() => {
-      status.textContent = '';
-      status.className = '';
-    }, 2000);
+document.addEventListener('DOMContentLoaded', () => {
+  const settingsBtn = document.getElementById('settingsBtn');
+  
+  if (settingsBtn) {
+    settingsBtn.addEventListener('click', async () => {
+      console.log('Settings button clicked');
+      try {
+        const settingsUrl = chrome.runtime.getURL('settings.html');
+        console.log('Opening settings URL:', settingsUrl);
+        await chrome.tabs.create({ url: settingsUrl });
+        window.close();
+      } catch (error) {
+        console.error('Error opening settings page:', error);
+      }
+    });
+  } else {
+    console.error('Settings button not found');
   }
 });
