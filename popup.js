@@ -1,3 +1,7 @@
+// Get default URL from manifest
+const manifest = chrome.runtime.getManifest();
+const DEFAULT_REDIRECT_URL = 'https://calendar.google.com/calendar/u/0/r/week'
+
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('Popup loaded, initializing...');
   const urlInput = document.getElementById('urlInput');
@@ -7,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log('Retrieving stored redirect URL...');
   const result = await chrome.storage.sync.get(['redirectUrl']);
   console.log('Retrieved configuration:', result);
-  urlInput.value = result.redirectUrl || 'https://www.google.com';
+  urlInput.value = result.redirectUrl || DEFAULT_REDIRECT_URL;
   console.log('Set input field to:', urlInput.value);
 
   saveBtn.addEventListener('click', async () => {
