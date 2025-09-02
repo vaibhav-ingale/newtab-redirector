@@ -15,12 +15,14 @@ A Chrome extension that redirects empty new tabs to your preferred URL while lea
 ### Local Development
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/vaibhav-ingale/newtab-redirector.git
    cd newtab-redirector
    ```
 
 2. **Load in Chrome (Developer Mode)**
+
    - Open Chrome and navigate to `chrome://extensions/`
    - Enable "Developer mode" (toggle in top right)
    - Click "Load unpacked"
@@ -30,7 +32,6 @@ A Chrome extension that redirects empty new tabs to your preferred URL while lea
    - Open a new tab (Cmd+T / Ctrl+T) - should redirect
    - Open settings (Cmd+, / Ctrl+,) - should NOT redirect
    - Click the extension icon to configure redirect URL
-
 
 ## File Structure
 
@@ -61,19 +62,23 @@ A Chrome extension that redirects empty new tabs to your preferred URL while lea
 ## Development Notes
 
 The extension uses Chrome's Manifest V3 and includes:
+
 - Service worker background script
 - Chrome Storage API for preferences
-- Tab event listeners with smart URL detection
+- Tab event listeners with URL detection
 - Popup interface for configuration
+- CSS loader https://css-loaders.com/infinity/
 
 ## Troubleshooting
 
 1. **Extension not redirecting**
+
    - Check Chrome extensions page for errors
    - Look at browser console for debug logs
    - Verify extension permissions are granted
 
 2. **Wrong pages being redirected**
+
    - Check console logs to see URL detection
    - Ensure only `chrome://newtab/` and `about:blank` trigger redirects
 
@@ -84,6 +89,7 @@ The extension uses Chrome's Manifest V3 and includes:
 ## Changelog
 
 ### Version 1.1
+
 - **Removed default iframe**: No longer shows a default iframe when none is configured
 - **Added settings integration**: New tab page now shows a message with a clickable button to open settings when no iframe is configured
 - **Enhanced user experience**: Clear guidance for users to configure their iframe through the settings page

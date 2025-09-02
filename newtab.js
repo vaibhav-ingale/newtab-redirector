@@ -37,9 +37,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .replace(/frameborder=["'][^"']*["']/gi, 'frameborder="0"');
             
             container.innerHTML = modifiedIframe;
+            
+            // Add load event listener to iframe to hide loading when ready
+            const iframe = container.querySelector('iframe');
+            if (iframe) {
+                iframe.addEventListener('load', () => {
+                    loading.style.display = 'none';
+                });
+                
+                // Fallback: hide loading after 10 seconds if iframe doesn't load
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                }, 10000);
+            } else {
+                loading.style.display = 'none';
+            }
         }
         
-        loading.style.display = 'none';
+        // Only hide loading immediately if no iframe is configured
+        if (!result.iframeTag) {
+            loading.style.display = 'none';
+        }
     } catch (error) {
         console.error('Error loading iframe:', error);
         container.innerHTML = `

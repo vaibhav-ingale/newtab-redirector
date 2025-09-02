@@ -24,13 +24,42 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .loader {
+            width: 90px;
+            height: 14px;
+            --c: #4285f4 92%, #0000;
+            background: 
+                radial-gradient(circle 7px at bottom, var(--c)) 0 0,
+                radial-gradient(circle 7px at top, var(--c)) 0 100%;
+            background-size: calc(100%/4) 50%;
+            background-repeat: repeat-x;
+            animation: l11 1s infinite;
+        }
+        
+        @keyframes l11 {
+            80%, 100% {
+                background-position: calc(100%/3) 0, calc(100%/-3) 100%;
+            }
+        }
+        
+        .loading-text {
             font-family: Arial, sans-serif;
             color: #666;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div id="loading">Loading...</div>
+    <div id="loading">
+        <div class="loader"></div>
+        <div class="loading-text">Loading your content...</div>
+    </div>
     <div id="iframe-container"></div>
     
     <script src="newtab.js"></script>
